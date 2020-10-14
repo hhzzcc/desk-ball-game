@@ -12,7 +12,4 @@ yarn or npm i
 # 运行
 node server/index.js
 
-# 打开浏览器输入
-localhost:1234/view/demos
-
 ```
