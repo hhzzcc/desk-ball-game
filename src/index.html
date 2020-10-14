@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桌球游戏</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        .content {
+            position: relative;
+        }
+
+        .scene {
+            background: url('./imgs/desk.jpg') 100% 100%;
+            background-size: contain;
+        }
+
+        .cover {
+            cursor: crosshair;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <canvas class="scene" width="600" height="408"></canvas>
+        <canvas class="cover" width="600" height="408"></canvas>
+    </div>
+    <script src="./index.js" type="module"></script>
+</body>
+</html>
