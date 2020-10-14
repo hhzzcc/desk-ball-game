@@ -1,6 +1,6 @@
 ## 桌球游戏
 
-[demo 地址](http://139.9.192.234:1234/views/demos/)
+[地址](https://hhzzcc.github.io/desk-ball-game/src/index.html)
 
 
 
