@@ -46,11 +46,11 @@ export class Desk {
 
     async initBall() {
         const ball = new Ball();
-        const promises = [ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 142, y: 200, vx: 0, vy: 0, url: '../imgs/white-ball.png', type: 'white' })];
+        const promises = [ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 142, y: 200, vx: 0, vy: 0, url: '/desk-ball-game/src/imgs/white-ball.png', type: 'white' })];
         for (let col = 0; col < 4; col++) {
             for (let i = 0; i < col + 1; i++) {
                 const ball = new Ball();
-                const promise = ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 400 + col * BALL_WIDTH, y: 200 + i * BALL_HEIGHT - col * BALL_HEIGHT / 2, vx: 0, vy: 0, url: '../imgs/yellow-ball.png' });
+                const promise = ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 400 + col * BALL_WIDTH, y: 200 + i * BALL_HEIGHT - col * BALL_HEIGHT / 2, vx: 0, vy: 0, url: '/desk-ball-game/src/imgs/yellow-ball.png' });
                 promises.push(promise);
             }
         }
@@ -75,7 +75,7 @@ export class Desk {
         if (v === 0) {
             if (this.balls[0].type !== 'white') {
                 const ball = new Ball();
-                await ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 142, y: 200, vx: 0, vy: 0, url: '../imgs/white-ball.png', type: 'white' });
+                await ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 142, y: 200, vx: 0, vy: 0, url: '/desk-ball-game/src/imgs/white-ball.png', type: 'white' });
                 this.draw(ball);
                 this.balls.unshift(ball);
             }
