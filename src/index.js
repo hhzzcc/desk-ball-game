@@ -6,5 +6,5 @@ const cover = document.querySelector('.cover');
 const desk = new Desk();
 desk.init({
     scene,
-    cover
+    cover,
 });

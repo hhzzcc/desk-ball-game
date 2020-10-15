@@ -4,22 +4,40 @@ import { collisionChecking } from './collision.js';
 
 const BALL_WIDTH = 28;
 const BALL_HEIGHT = 28;
+const $process = document.querySelector('.process');
 export class Desk {
     constructor() {}
 
     async init({ scene, cover }) {
         this.balls = [];
         this.currentBallsLength = 0;
+        this.F = 100;
+        this.timmer  = 60;
         this.score = 0;
+        this.isDown = false;
+        this.isWin = false;
         this.scene = scene;
         this.sceneCtx = scene.getContext('2d');
         this.cover = cover;
         this.coverCtx = cover.getContext('2d');
         await this.initBall();
 
-        cover.addEventListener('mousemove', e => {
-            const x = e.clientX;
-            const y = e.clientY;
+
+        const $time = document.querySelector('.time');
+        const updateTime = () => {
+            if (this.isWin) return;
+            setTimeout(() => {
+                this.timmer ++;
+                const str = this.getTimeStr();
+                $time.textContent = str;
+                updateTime();
+            }, 1000);
+        };
+        updateTime();
+
+        this.cover.addEventListener('mousemove', e => {
+            const x = e.layerX;
+            const y = e.layerY;
             this.coverCtx.clearRect(0, 0, this.scene.width, this.scene.height);
             this.coverCtx.beginPath();
             this.coverCtx.moveTo(this.balls[0].x, this.balls[0].y);
@@ -33,10 +51,23 @@ export class Desk {
             this.coverCtx.stroke();
         });
 
-        cover.addEventListener('click', e => {
-            const x = e.clientX;
-            const y = e.clientY;
-            const F = 15;
+
+        this.cover.addEventListener('mousedown', e => {
+            this.isDown = true;
+            const addF = () => {
+                if (!this.isDown) return;
+                this.updateF(this.F - 1);
+                requestAnimationFrame(addF);
+            };
+            addF();
+            
+        });
+
+        this.cover.addEventListener('mouseup', e => {
+            this.isDown = false;
+            const x = e.layerX;
+            const y = e.layerY;
+            const F = this.F / 3;
             const whiteBall = this.balls[0];
 
             const vecX = x - whiteBall.x;
@@ -54,7 +85,7 @@ export class Desk {
     async initBall() {
         const ball = new Ball();
         const promises = [ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 255, y: this.scene.height / 2, vx: 0, vy: 0, url: '/src/imgs/white-ball.png', type: 'white' })];
-        for (let col = 0; col < 4; col++) {
+        for (let col = 0; col < 1; col++) {
             for (let i = 0; i < col + 1; i++) {
                 const ball = new Ball();
                 const promise = ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 700 + col * BALL_WIDTH, y: this.scene.height / 2 + i * BALL_HEIGHT - col * BALL_HEIGHT / 2, vx: 0, vy: 0, url: '/src/imgs/yellow-ball.png' });
@@ -87,7 +118,7 @@ export class Desk {
                 this.draw(ball);
                 this.balls.unshift(ball);
             }
-            console.log(this.currentBallsLength, this.balls.length);
+
             if (this.currentBallsLength > this.balls.length) {
                 await this.toast('牛逼牛逼');
                 this.currentBallsLength = this.balls.length;
@@ -95,10 +126,21 @@ export class Desk {
             else {
                 await this.toast('不行啊兄弟');
             }
+
+            if (this.balls.length === 1) {
+                this.win();
+            }
             this.cover.style.zIndex = 9;
+            this.updateF(99);
             return;
         };
         requestAnimationFrame(() => this.run());
+    }
+
+    // 力道
+    updateF(f) {
+        this.F = f === - 1 ? 99 : f % 100;
+        $process.style.transform = `translateX(${this.F - 100}px)`;
     }
 
     // 得分
@@ -106,6 +148,13 @@ export class Desk {
         this.score ++;
         const $score = document.querySelector('.score');
         $score.textContent = this.score;
+    }
+
+    getTimeStr() {
+        const hh = ~~(this.timmer / 3600);
+        const mm = ~~((this.timmer - hh) / 60);
+        const ss = this.timmer - hh * 3600 - mm * 60;
+        return `${hh < 10 ? '0' + hh : hh}:${mm < 10 ? '0' + mm : mm}:${ss < 10 ? '0' + ss : ss}`;
     }
 
     // 进球
@@ -211,5 +260,11 @@ export class Desk {
             }, 1000);
         });
         
+    }
+
+    win() {
+        this.isWin = true;
+        alert(`恭喜你胜利了，总耗时 ${this.getTimeStr()} 再来一局？`);
+        location.reload();
     }
 }
