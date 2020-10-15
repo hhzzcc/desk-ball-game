@@ -85,7 +85,7 @@ export class Desk {
     async initBall() {
         const ball = new Ball();
         const promises = [ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 255, y: this.scene.height / 2, vx: 0, vy: 0, url: '/src/imgs/white-ball.png', type: 'white' })];
-        for (let col = 0; col < 1; col++) {
+        for (let col = 0; col < 4; col++) {
             for (let i = 0; i < col + 1; i++) {
                 const ball = new Ball();
                 const promise = ball.init({ w: BALL_WIDTH, h: BALL_HEIGHT, x: 700 + col * BALL_WIDTH, y: this.scene.height / 2 + i * BALL_HEIGHT - col * BALL_HEIGHT / 2, vx: 0, vy: 0, url: '/src/imgs/yellow-ball.png' });
