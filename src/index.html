@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>桌球游戏</title>
     <style>
+        body {
+            overflow: hidden;
+        }
+
         * {
             margin: 0;
         }
@@ -18,21 +22,45 @@
             background-size: contain;
         }
 
-        .cover {
-            cursor: crosshair;
+        canvas {
+            cursor: none;
+        }
+
+        .toast {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 1000px;
+            height: 680px;
+            color: #fff;
+            font-weight: bolder;
+            letter-spacing: 4px;
+            font-size: 35px;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s;
         }
 
         canvas {
             position: absolute;
-            top: 0;
+            top: 20px;
             left: 0;
         }
     </style>
 </head>
 <body>
     <div class="content">
-        <canvas class="scene" width="600" height="408"></canvas>
-        <canvas class="cover" width="600" height="408"></canvas>
+        <div>
+            当前得分：
+            <span class="score">0</span>
+        </div>
+        <canvas class="scene" width="1000" height="680"></canvas>
+        <canvas class="cover" width="1000" height="680"></canvas>
+        <div class="toast"></div>
     </div>
     <script src="./index.js" type="module"></script>
 </body>

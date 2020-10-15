@@ -17,8 +17,6 @@ export class Ball {
                 this.h = h;
                 this.x = x;
                 this.y = y;
-                this.cx = this.x + this.w / 2;
-                this.cy = this.y + this.h / 2;
                 this.vx = vx;
                 this.vy = vy;
                 this.image = image;
@@ -33,13 +31,10 @@ export class Ball {
         this.x += this.vx;
         this.y += this.vy;
 
-        this.vx *= 0.991;
-        this.vy *= 0.991;
+        this.vx *= 0.99;
+        this.vy *= 0.99;
 
-        this.vx = Math.abs(this.vx) <= 0.05 ? 0 : this.vx;
-        this.vy = Math.abs(this.vy) <= 0.05 ? 0 : this.vy;
-
-        this.cx += this.vx;
-        this.cy += this.vy;
+        this.vx = Math.abs(this.vx) <= 0.1 ? 0 : this.vx;
+        this.vy = Math.abs(this.vy) <= 0.1 ? 0 : this.vy;
     }
 }
