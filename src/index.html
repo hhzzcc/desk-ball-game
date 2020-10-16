@@ -25,11 +25,15 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            cursor: none;
         }
 
         .score-content {
             font-size: 20px;
+        }
+
+        .score-content > div {
+            display: flex;
+            align-items: center;
         }
 
         .score {
@@ -99,6 +103,11 @@
             top: 0;
             left: 0;
         }
+
+        input {
+            width: 25px;
+            height: 25px;
+        }
     </style>
 </head>
 <body>
@@ -106,6 +115,7 @@
         <div class="score-content">
             当前得分：<span class="score">0</span>
             <div>耗时： <span class="time">00:00:00</span></div>
+            <div>辅助线：<input class="help-line" type="checkbox" value="1" /></div>
         </div>
         <div class="power">
             力道：

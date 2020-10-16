@@ -35,12 +35,24 @@ export class Desk {
         };
         updateTime();
 
+
+        // const isCollision = (x1, y1, x2, y2, ball) => {
+        //     const A = y2 - y1
+        //     const B = x1 - x2
+        //     const C = x2 * y1 - x1 * y2;
+        //     const { x, y } = ball;
+        //     const c = Math.abs((A * x + B * y + C)) / Math.sqrt((A ** 2 + B ** 2));
+        //     return c < (ball.w / 2);
+        // };
+        const $checkbox = document.querySelector('.help-line');
         this.cover.addEventListener('mousemove', e => {
             const x = e.layerX;
             const y = e.layerY;
+            const whiteBallX = this.balls[0].x;
+            const whiteBallY = this.balls[0].y;
             this.coverCtx.clearRect(0, 0, this.scene.width, this.scene.height);
             this.coverCtx.beginPath();
-            this.coverCtx.moveTo(this.balls[0].x, this.balls[0].y);
+            this.coverCtx.moveTo(whiteBallX, whiteBallY);
             this.coverCtx.lineTo(x, y);
             this.coverCtx.lineWidth = 2;
             this.coverCtx.strokeStyle = 'white';
@@ -49,6 +61,31 @@ export class Desk {
             this.coverCtx.beginPath();
             this.coverCtx.arc(x , y, BALL_HEIGHT / 2, 0, 2 * Math.PI);
             this.coverCtx.stroke();
+
+            if (!$checkbox.checked) return;
+            for (let i = 1; i < this.balls.length; i++) {
+                const ball = this.balls[i];
+
+                // if (isCollision(whiteBallX, whiteBallY, x, y, ball)) {
+                //     const t = 100;
+                //     this.coverCtx.beginPath();
+                //     this.coverCtx.moveTo(x, y);
+                //     this.coverCtx.lineTo(ball.x + t * (ball.x - x), ball.y + t * (ball.y - y));
+                //     this.coverCtx.lineWidth = 1;
+                //     this.coverCtx.strokeStyle = 'white';
+                //     this.coverCtx.stroke();
+                // }
+                const isCollision = (Math.sqrt((ball.x - x) ** 2 + (ball.y - y) ** 2)) < ball.w;
+                if (isCollision) {
+                    const t = 100;
+                    this.coverCtx.beginPath();
+                    this.coverCtx.moveTo(x, y);
+                    this.coverCtx.lineTo(ball.x + t * (ball.x - x), ball.y + t * (ball.y - y));
+                    this.coverCtx.lineWidth = 1;
+                    this.coverCtx.strokeStyle = 'white';
+                    this.coverCtx.stroke();
+                }
+            }
         });
 
 
@@ -124,7 +161,7 @@ export class Desk {
                 this.currentBallsLength = this.balls.length;
             }
             else {
-                await this.toast('不行啊兄弟');
+                await this.toast('加把劲');
             }
 
             if (this.balls.length === 1) {
@@ -234,8 +271,9 @@ export class Desk {
                 continue;
             }
             const nextBall = this.balls[i];
-            const rc = Math.sqrt((ball.x - nextBall.x) ** 2 + (ball.y - nextBall.y) ** 2);
-            if (rc < ball.w) {
+            const isCollision = Math.sqrt(((ball.x + ball.vx) - (nextBall.x + nextBall.vx)) ** 2 + ((ball.y + ball.vy) - (nextBall.y + nextBall.vy)) ** 2) < ball.w;
+            if (isCollision) {
+                const rc = Math.sqrt((ball.x - nextBall.x) ** 2 + (ball.y - nextBall.y) ** 2);
                 collisionChecking(ball, nextBall, rc);
             }
         }

@@ -14,9 +14,4 @@ export const collisionChecking = (ball, nextBall, rc) => {
     ball.y += cy;
     nextBall.x -= cx;
     nextBall.y -= cy;
-
-    ball.x += cx;
-    ball.y += cy;
-    nextBall.x -= cx;
-    nextBall.y -= cy;
 };
