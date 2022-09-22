@@ -128,7 +128,7 @@ export class Desk {
         y: this.scene.height / 2,
         vx: 0,
         vy: 0,
-        url: "./imgs/white-ball.png",
+        url: "./src/imgs/white-ball.png",
         type: "white",
       }),
     ];
@@ -142,7 +142,7 @@ export class Desk {
           y: this.scene.height / 2 + i * BALL_HEIGHT - (col * BALL_HEIGHT) / 2,
           vx: 0,
           vy: 0,
-          url: "./imgs/yellow-ball.png",
+          url: "./src/imgs/yellow-ball.png",
         });
         promises.push(promise);
       }
@@ -176,7 +176,7 @@ export class Desk {
           y: this.scene.height / 2,
           vx: 0,
           vy: 0,
-          url: "./imgs/white-ball.png",
+          url: "./src/imgs/white-ball.png",
           type: "white",
         });
         this.draw(ball);
