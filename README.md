@@ -1,6 +1,6 @@
 ## 桌球游戏
 
-[地址](http://121.5.76.237:2222/src/index.html)
+#### [体验地址](https://hhzzcc.github.io/desk-ball-game/src/index.html)
 
 
 
