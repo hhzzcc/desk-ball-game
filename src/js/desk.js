@@ -128,7 +128,7 @@ export class Desk {
         y: this.scene.height / 2,
         vx: 0,
         vy: 0,
-        url: "./src/imgs/white-ball.png",
+        url: "./imgs/white-ball.png",
         type: "white",
       }),
     ];
